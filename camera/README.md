@@ -20,4 +20,4 @@ Once you have your Pi running and you have terminal access, either directly with
 1. Go to Localisation Options and set your locale and timezone
 2. Go to Interfacing Options > Camera and enable the camera interface
 3. Go to Advanced Options > Expand Filesystem and make sure the filesystem is expanded
-4. Finish and reboot your Pi.
+4. Select "Finish" and reboot your Pi.
