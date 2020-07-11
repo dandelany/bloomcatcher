@@ -1,0 +1,2 @@
+# rsync -av --remove-source-files pi@georgia.local:/home/pi/bloomcatcher/camera/cronlapse/img ~/Downloads/georgia
+rsync -av pi@georgia.local:/home/pi/bloomcatcher/camera/cronlapse/img ~/Downloads/georgia
