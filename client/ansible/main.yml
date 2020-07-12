@@ -43,6 +43,7 @@
     tags: [setup-rws]
 
   - name: checkout bloomcatcher repo
+    become: no
     git:
       repo: git://github.com/dandelany/bloomcatcher.git
       dest: "/home/pi/bloomcatcher"

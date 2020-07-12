@@ -1,0 +1,12 @@
+---
+- hosts: all
+
+  tasks: 
+  - name: Sync from host
+    synchronize:
+      mode: pull
+      src: /home/pi/bloomcatcher/camera/cronlapse/img/
+      dest: ../../data/{{ inventory_hostname }}/
+      rsync_opts:
+        - "--remove-source-files"
+    tags: [sync]
