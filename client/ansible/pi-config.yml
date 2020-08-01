@@ -1,0 +1,19 @@
+---
+- hosts: setup_cameras
+  # use privilege escalation (sudo)
+  become: yes
+
+  roles:
+    - role: mikolak-net.raspi_config
+      # perform full update+upgrade
+      raspi_config_update_packages: yes
+      # have the FS fill the SD card
+      raspi_config_expanded_filesystem: yes
+      # set global locale
+      raspi_config_locale: en_US.UTF-8
+      # set timezone
+      raspi_config_timezone: America/Los_Angeles
+      # set hostname
+      raspi_config_hostname: "{{inventory_hostname}}"
+      # ensure camera support is on
+      raspi_config_enable_camera: yes

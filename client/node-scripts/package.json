@@ -1,0 +1,21 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sync": "node sync.mjs",
+    "videos": "node make-video.mjs"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-ssh": "^10.0.2",
+    "shelljs": "^0.8.4",
+    "yaml": "^1.10.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.0.5"
+  }
+}

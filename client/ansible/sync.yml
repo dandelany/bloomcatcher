@@ -1,12 +1,19 @@
 ---
-- hosts: all
+- hosts: field_cameras
 
   tasks: 
+  - name: Create images directory if it does not exist
+    file:
+      path: ../../data/images/{{ inventory_hostname }}/latest/
+      state: directory
+      mode: '0755'
+    delegate_to: localhost
+
   - name: Sync from host
     synchronize:
       mode: pull
       src: /home/pi/bloomcatcher/camera/cronlapse/img/
-      dest: ../../data/{{ inventory_hostname }}/
+      dest: ../../data/images/{{ inventory_hostname }}/latest/
       rsync_opts:
         - "--remove-source-files"
     tags: [sync]

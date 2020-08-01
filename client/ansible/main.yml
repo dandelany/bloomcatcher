@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: setup_cameras
   # use privilege escalation (sudo)
   become: yes
 
@@ -51,9 +51,4 @@
       accept_hostkey: true
     tags: [setup, update]
 
-
-
-# - name: Update apt-get repo and cache
-#   remote_user: root
-#   apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
 
