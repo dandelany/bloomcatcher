@@ -1,0 +1,11 @@
+---
+- hosts: lab_cameras
+  tasks:
+    - name: checkout bloomcatcher repo
+      become: no
+      git:
+        repo: git://github.com/dandelany/bloomcatcher.git
+        dest: "/home/pi/bloomcatcher"
+        version: master
+        accept_hostkey: true
+      tags: [setup, update]

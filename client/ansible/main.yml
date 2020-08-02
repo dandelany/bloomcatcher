@@ -21,6 +21,7 @@
       - git
       - python-pip
       - pipenv
+      - nodejs
     tags: [setup]
 
   - name: Check if rws (raspi-webrtc-streamer) is installed

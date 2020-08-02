@@ -44,7 +44,7 @@ async function trySSHConnect(host) {
   });
 }
 
-async function main(){
+async function sync(){
   const cameras = getFieldCameraHosts();
   for(const key of Object.keys(cameras)) {
     const host = cameras[key];
@@ -67,4 +67,31 @@ async function main(){
   }
 }
 
+// sync();
+
+async function main() {
+  let done = false;
+  await sync();
+  done = true;
+
+  setInterval(async () => {
+    console.log('trying to sync');
+    if(!done) return;
+    done = false;
+    await sync();
+    done = true;
+  }, 1000 * 60 * 5);
+}
+
 main();
+
+// let done = true;
+//
+// console.log('setting interval');
+//
+// setInterval(async () => {
+//   if(!done) return;
+//   done = false;
+//   await sync();
+//   done = true;
+// }, 1000 * 60 * 10);
