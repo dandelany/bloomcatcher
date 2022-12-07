@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "node-ssh": "^10.0.2",
+    "node-ssh": "^13.0.0",
     "shelljs": "^0.8.4",
     "yaml": "^1.10.0"
   },
