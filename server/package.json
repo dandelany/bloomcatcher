@@ -1,0 +1,23 @@
+{
+  "name": "bloomcatcher-server",
+  "version": "1.0.0",
+  "description": "Server for managing and serving data from the bloomcatcher cameras",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dandelany/bloomcatcher.git"
+  },
+  "author": "Dan Delany <dan.delany@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dandelany/bloomcatcher/issues"
+  },
+  "homepage": "https://github.com/dandelany/bloomcatcher#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}
