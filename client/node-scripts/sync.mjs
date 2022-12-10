@@ -41,7 +41,9 @@ async function trySSHConnect(host) {
   return await ssh.connect({
     host: host.ansible_host,
     username: host.ansible_user,
-    privateKey: `/home/dan/.ssh/id_ed25519`
+    privateKey: `/home/dan/.ssh/id_ed25519`,
+    // TODO: replace this with config file variable
+    // privateKey: `/Users/delany/.ssh/id_rsa`
   });
 }
 
