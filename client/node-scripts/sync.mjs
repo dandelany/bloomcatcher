@@ -33,6 +33,7 @@ function getSyncCommandFor(host, cameraName) {
   if(!address || !imagesDirPath) return;
 
   const cmd = `rsync -av --progress --remove-source-files ${user}@${address}:${CAM_IMG_PATH} ${imagesDirPath}`;
+  // const cmd = `rsync -av --progress ${user}@${address}:${CAM_IMG_PATH} ${imagesDirPath}`;
   return cmd;
 }
 
@@ -40,8 +41,13 @@ async function trySSHConnect(host) {
   return await ssh.connect({
     host: host.ansible_host,
     username: host.ansible_user,
-    privateKey: `/Users/delany/.ssh/id_rsa`
+    privateKey: `/home/dan/.ssh/id_ed25519`
   });
+}
+
+function dirExists(path) { return sh.test('-d', path); }
+function ensureDir(path) {
+    if(!dirExists(path)) sh.mkdir('-p', path);
 }
 
 async function sync(){
@@ -60,6 +66,9 @@ async function sync(){
       console.error(e);
     }
     if(!ok) return;
+
+    const imagesDirPath = getLatestImagesDirPath(key);
+    ensureDir(imagesDirPath);
 
     const syncCommand = getSyncCommandFor(host, key);
     console.log(syncCommand);
@@ -80,7 +89,7 @@ async function main() {
     done = false;
     await sync();
     done = true;
-  }, 1000 * 60 * 5);
+  }, 1000 * 60);
 }
 
 main();
