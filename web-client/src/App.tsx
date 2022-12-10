@@ -27,6 +27,7 @@ function App() {
       <header className="App-header">
         Bloomcatcher
       </header>
+
       {/*<nav>*/}
       {/*  <ul>*/}
       {/*    <li><a href="#">Latest Images</a></li>*/}
@@ -39,7 +40,7 @@ function App() {
           <div>
             {latest.map(camera => {
               const lastImgName = camera.latestImages[0];
-              const imgUrl = `http://localhost:3939/data/images/${camera.name}/latest/${lastImgName}`;
+              const imgUrl = `/data/images/${camera.name}/latest/${lastImgName}`;
               return <div>
                 <h3>Latest from {camera.name} - {lastImgName}</h3>
                 <img src={imgUrl} alt="" style={{height: '90vh'}} />

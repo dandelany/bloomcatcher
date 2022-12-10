@@ -8,7 +8,7 @@ export namespace API {
 }
 export const fetchLatest = async (): Promise<{ success: true, data: API.LatestResponse } | { success: false, error: string }> => {
     try {
-        let response = await fetch('http://localhost:3939/latest');
+        let response = await fetch('/api/latest');
         let json = await response.json();
         return {success: true, data: json};
     } catch (error) {
@@ -19,7 +19,7 @@ export const fetchLatest = async (): Promise<{ success: true, data: API.LatestRe
 
 export const fetchCameras = async (): Promise<{ success: true, data: API.LatestResponse } | { success: false, error: string }> => {
     try {
-        let response = await fetch('http://localhost:3939/cameras');
+        let response = await fetch('/api/cameras');
         let json = await response.json();
         return {success: true, data: json};
     } catch (error) {

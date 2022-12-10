@@ -22,7 +22,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "watch": "onchange -i 'src/**/*.ts' 'src/**/*.js' 'src/**/*.tsx' 'src/**/*.jsx' 'src/**/*.css'  -- npm run watch-changed",
+    "watch-changed": "npm run build && echo 'rebuilt client'"
   },
   "eslintConfig": {
     "extends": [
@@ -41,5 +43,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "onchange": "^7.1.0"
   }
 }

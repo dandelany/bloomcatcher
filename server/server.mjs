@@ -15,6 +15,8 @@ const port = 3939;
 const corsOptions = { origin: 'http://localhost:3940' };
 app.use(cors(corsOptions));
 
+app.use('/', express.static('../web-client/build'));
+
 // static server for all data in ../data
 app.use('/data', express.static('../data'));
 
@@ -24,7 +26,7 @@ const cameras = [
     {name: 'claude', hostname: 'claude.local'},
     {name: 'georgia', hostname: 'georgia.local'}
 ]
-app.get('/cameras', async (req, res) => {
+app.get('/api/cameras', async (req, res) => {
     const camerasInfo = await Promise.all(
         cameras.map(async camera => {
             const latestImages = await getLatestImages(camera.name);
@@ -35,7 +37,7 @@ app.get('/cameras', async (req, res) => {
 });
 
 
-app.get('/latest', async (req, res) => {
+app.get('/api/latest', async (req, res) => {
     try {
         // names of folders in /data/images are the names of the cameras
         const dirObjs = (await readdir('../data/images', {withFileTypes: true}));
