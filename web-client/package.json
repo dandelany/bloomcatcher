@@ -54,9 +54,5 @@
     "url": "git+https://github.com/dandelany/bloomcatcher.git"
   },
   "author": "Dan Delany <dan.delany@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/dandelany/bloomcatcher/issues"
-  },
-  "homepage": "https://github.com/dandelany/bloomcatcher#readme"
+  "license": "MIT"
 }

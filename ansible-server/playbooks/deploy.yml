@@ -18,6 +18,12 @@
         version: master
         accept_hostkey: true
 
+    - name: restart pm2 service
+      ansible.builtin.command: pm2 startOrRestart ecosystem.config.js
+      args:
+        chdir: /home/dan/Documents/repos/bloomcatcher/server
+    # rebuild client
+
     # TODO: npm install
 
 #    - name: Install "pm2" node.js package globally.

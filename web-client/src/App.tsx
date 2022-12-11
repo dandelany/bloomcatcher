@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { API, fetchLatest } from "./api/api";
+import { baseUrl } from "./utils";
 
 // refresh the page every 20 seconds
 // todo: implement proper data refreshing
@@ -37,7 +38,7 @@ function App() {
           <div>
             {latest.map((camera) => {
               const lastImgName = camera.latestImages[0];
-              const imgUrl = `/data/images/${camera.name}/latest/${lastImgName}`;
+              const imgUrl = `${baseUrl}/data/images/${camera.name}/latest/${lastImgName}`;
               return (
                 <div>
                   <h3>

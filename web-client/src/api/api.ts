@@ -1,3 +1,5 @@
+import { baseUrl } from "../utils";
+
 export namespace API {
   export type Result<T> = { success: true; data: T } | { success: false; error: string };
 
@@ -10,7 +12,7 @@ export namespace API {
 
 export const fetchLatest = async (): Promise<API.Result<API.LatestResponse>> => {
   try {
-    let response = await fetch("/api/latest");
+    let response = await fetch(`${baseUrl}/api/latest`);
     let json = await response.json();
     return { success: true, data: json };
   } catch (error) {

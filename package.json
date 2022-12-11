@@ -16,10 +16,6 @@
     "url": "https://github.com/dandelany/bloomcatcher/issues"
   },
   "homepage": "https://github.com/dandelany/bloomcatcher#readme",
-  "workspaces": [
-    "server",
-    "web-client"
-  ],
   "devDependencies": {
     "prettier": "2.8.1"
   }
