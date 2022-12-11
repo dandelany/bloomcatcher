@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import './App.css';
-import {API, fetchLatest} from './api/api';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import { API, fetchLatest } from "./api/api";
 
 // refresh the page every 20 seconds
 // todo: implement proper data refreshing
@@ -21,12 +21,9 @@ function App() {
     })();
   }, []);
 
-
   return (
     <div className="App">
-      <header className="App-header">
-        Bloomcatcher
-      </header>
+      <header className="App-header">Bloomcatcher</header>
 
       {/*<nav>*/}
       {/*  <ul>*/}
@@ -36,23 +33,26 @@ function App() {
       {/*  </ul>*/}
       {/*</nav>*/}
       <div>
-        {latest ?
+        {latest ? (
           <div>
-            {latest.map(camera => {
+            {latest.map((camera) => {
               const lastImgName = camera.latestImages[0];
               const imgUrl = `/data/images/${camera.name}/latest/${lastImgName}`;
-              return <div>
-                <h3>Latest from {camera.name} - {lastImgName}</h3>
-                <img src={imgUrl} alt="" style={{height: '90vh'}} />
-                {/*{camera.latestImages.map(imgName => {*/}
-                {/*  const imgUrl = `http://localhost:3939/data/images/${camera.name}/latest/${imgName}`;*/}
-                {/*  return <img src={imgUrl} alt="" width={300} />*/}
-                {/*})}*/}
-              </div>
+              return (
+                <div>
+                  <h3>
+                    Latest from {camera.name} - {lastImgName}
+                  </h3>
+                  <img src={imgUrl} alt="" style={{ height: "90vh" }} />
+                  {/*{camera.latestImages.map(imgName => {*/}
+                  {/*  const imgUrl = `http://localhost:3939/data/images/${camera.name}/latest/${imgName}`;*/}
+                  {/*  return <img src={imgUrl} alt="" width={300} />*/}
+                  {/*})}*/}
+                </div>
+              );
             })}
           </div>
-          : null
-        }
+        ) : null}
       </div>
     </div>
   );

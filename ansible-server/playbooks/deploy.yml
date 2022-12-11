@@ -14,7 +14,7 @@
     - name: checkout bloomcatcher repo
       ansible.builtin.git:
         repo: git@github.com:dandelany/bloomcatcher.git
-        dest: "/home/dan/Documents/repos/bloomcatcher2"
+        dest: "/home/dan/Documents/repos/bloomcatcher"
         version: master
         accept_hostkey: true
 

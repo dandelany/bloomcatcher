@@ -46,5 +46,17 @@
   },
   "devDependencies": {
     "onchange": "^7.1.0"
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dandelany/bloomcatcher.git"
+  },
+  "author": "Dan Delany <dan.delany@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dandelany/bloomcatcher/issues"
+  },
+  "homepage": "https://github.com/dandelany/bloomcatcher#readme"
 }
