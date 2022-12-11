@@ -1,21 +1,23 @@
 import {readdir} from "node:fs/promises";
+import * as path from "path";
+import { fileURLToPath } from 'url';
 import express from 'express';
 import cors from 'cors';
-// const express = require('express');
-// const cors = require('cors');
-
-
 
 import {getLatestImages} from './utils/data.mjs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = 3939;
 
-// enable cross-origin requests from the web-client
+// enable cross-origin requests from the web-client dev server
 const corsOptions = { origin: 'http://localhost:3940' };
 app.use(cors(corsOptions));
 
-app.use('/', express.static('../web-client/build'));
+const webClientBuildPath = path.join(__dirname, '../web-client/build');
+app.use('/', express.static(webClientBuildPath));
 
 // static server for all data in ../data
 app.use('/data', express.static('../data'));
@@ -40,7 +42,8 @@ app.get('/api/cameras', async (req, res) => {
 app.get('/api/latest', async (req, res) => {
     try {
         // names of folders in /data/images are the names of the cameras
-        const dirObjs = (await readdir('../data/images', {withFileTypes: true}));
+        const imagesDirPath = path.join(__dirname, '../data/images')
+        const dirObjs = (await readdir(imagesDirPath, {withFileTypes: true}));
         const cameraNames = dirObjs.filter(obj => obj.isDirectory()).map(obj => obj.name);
 
         const cameraData = await Promise.all(

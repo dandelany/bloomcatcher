@@ -1,0 +1,8 @@
+# inventory file for homelab server
+
+all:
+  children:
+    homelab:
+      hosts:
+        homelab.local:
+          ansible_user: dan

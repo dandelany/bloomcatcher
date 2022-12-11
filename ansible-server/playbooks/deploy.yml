@@ -1,0 +1,27 @@
+- name: Deploy bloomcatcher server
+  hosts: homelab
+  tasks:
+#    - name: Ensure "nodejs" package is installed
+#      become: yes
+#      ansible.builtin.apt:
+#        name: nodejs
+#
+#    - name: Ensure repos directory exists
+#      ansible.builtin.file:
+#        path: /home/dan/Documents/repos
+#        state: directory
+
+    - name: checkout bloomcatcher repo
+      ansible.builtin.git:
+        repo: git@github.com:dandelany/bloomcatcher.git
+        dest: "/home/dan/Documents/repos/bloomcatcher2"
+        version: master
+        accept_hostkey: true
+
+    # TODO: npm install
+
+#    - name: Install "pm2" node.js package globally.
+#      community.general.npm:
+#        name: pm2
+#        global: true
+
