@@ -1,15 +1,15 @@
 - name: Deploy bloomcatcher server
   hosts: homelab
   tasks:
-#    - name: Ensure "nodejs" package is installed
-#      become: yes
-#      ansible.builtin.apt:
-#        name: nodejs
-#
-#    - name: Ensure repos directory exists
-#      ansible.builtin.file:
-#        path: /home/dan/Documents/repos
-#        state: directory
+    - name: Ensure "nodejs" package is installed
+      become: yes
+      ansible.builtin.apt:
+        name: nodejs
+
+    - name: Ensure repos directory exists
+      ansible.builtin.file:
+        path: /home/dan/Documents/repos
+        state: directory
 
     - name: checkout bloomcatcher repo
       ansible.builtin.git:

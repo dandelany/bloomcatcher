@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import express from 'express';
 import cors from 'cors';
 
+import {DATA_DIR_PATH} from "./constants.mjs";
 import {getLatestImages} from './utils/data.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -16,11 +17,12 @@ const port = 3939;
 const corsOptions = { origin: 'http://localhost:3940' };
 app.use(cors(corsOptions));
 
+// serve built web client with static server
 const webClientBuildPath = path.join(__dirname, '../web-client/build');
 app.use('/', express.static(webClientBuildPath));
 
-// static server for all data in ../data
-app.use('/data', express.static('../data'));
+// static server for all data in the data directory
+app.use('/data', express.static(DATA_DIR_PATH));
 
 // get the list of cameras & their metadata
 // todo replace this with shared config file
@@ -38,11 +40,10 @@ app.get('/api/cameras', async (req, res) => {
     res.json(camerasInfo);
 });
 
-
 app.get('/api/latest', async (req, res) => {
     try {
         // names of folders in /data/images are the names of the cameras
-        const imagesDirPath = path.join(__dirname, '../data/images')
+        const imagesDirPath = path.join(DATA_DIR_PATH, 'images');
         const dirObjs = (await readdir(imagesDirPath, {withFileTypes: true}));
         const cameraNames = dirObjs.filter(obj => obj.isDirectory()).map(obj => obj.name);
 
