@@ -4,6 +4,7 @@ import { fileURLToPath } from "url";
 import express from "express";
 import cors from "cors";
 import serveIndex from "serve-index";
+import sharp from "sharp";
 
 import { DATA_DIR_PATH } from "./constants.mjs";
 import { getLatestImages } from "./utils/data.mjs";
@@ -22,12 +23,12 @@ app.use(cors(corsOptions));
 const webClientBuildPath = path.join(__dirname, "../web-client/build");
 app.use("/", express.static(webClientBuildPath));
 
-
-app.use("/data",
-    // static server for all data in the data directory
-    express.static(DATA_DIR_PATH),
-    // serve index pages for directories in data dir
-    serveIndex(DATA_DIR_PATH, { icons: true })
+app.use(
+  "/data",
+  // static server for all data in the data directory
+  express.static(DATA_DIR_PATH),
+  // serve index pages for directories in data dir
+  serveIndex(DATA_DIR_PATH, { icons: true })
 );
 
 // get the list of cameras & their metadata
@@ -63,6 +64,24 @@ app.get("/api/latest", async (req, res) => {
     console.error(err);
     res.status(500).send(JSON.stringify(error));
   }
+});
+
+app.get("/thumbs/:width/*", (req, res) => {
+  // creates a thumbnail of a larger image using sharp
+  // :width url parameter defines width of thumbnail
+  // * is the path to an image in /data/images
+
+  const partialImgPath = req.params[0];
+  const imgPath = path.join(DATA_DIR_PATH, "images", partialImgPath);
+  const size = parseInt(req.params["width"], 10);
+
+  sharp(imgPath)
+    .resize({ width: size })
+    .toBuffer()
+    .then((data) => {
+      res.contentType("image/jpeg");
+      res.send(data);
+    });
 });
 
 app.listen(port, () => {

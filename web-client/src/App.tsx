@@ -29,22 +29,39 @@ function App() {
       {/*<nav>*/}
       {/*  <ul>*/}
       {/*    <li><a href="#">Latest Images</a></li>*/}
-      {/*    <li><a href="#">Camera Controls</a></li>*/}
+      {/*    <li><a href="#">Camera Manager</a></li>*/}
+      {/*    <li><a href="#">Camera Settings</a></li>*/}
       {/*    <li><a href="#">Image Library</a></li>*/}
+      {/*    <li><a href="#">Video Creation</a></li>*/}
       {/*  </ul>*/}
       {/*</nav>*/}
+
       <div>
         {latest ? (
           <div>
             {latest.map((camera) => {
               const lastImgName = camera.latestImages[0];
               const imgUrl = `${baseUrl}/data/images/${camera.name}/latest/${lastImgName}`;
+
+              const imgCount = camera.latestImages.length;
+              const desiredMaxImgCount = 60;
+              const imgSkip = Math.ceil(imgCount / desiredMaxImgCount);
+
               return (
                 <div>
                   <h3>
                     Latest from {camera.name} - {lastImgName}
                   </h3>
                   <img src={imgUrl} alt="" style={{ height: "90vh" }} />
+
+                  <div>
+                    {camera.latestImages
+                      .filter((d, i) => i % imgSkip === 0)
+                      .map((imgName) => {
+                        const thumbUrl = `${baseUrl}/thumbs/300/${camera.name}/latest/${lastImgName}`;
+                        return <img src={thumbUrl} alt="" style={{ width: "300px" }} />;
+                      })}
+                  </div>
                 </div>
               );
             })}
