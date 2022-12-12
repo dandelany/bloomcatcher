@@ -9,6 +9,16 @@ import "./index.css";
 const container = document.getElementById("root")!;
 const root = createRoot(container);
 
+setTimeout(() => {
+  const title = document.title;
+  const hostname = document.location.hostname.toLowerCase();
+  if (hostname.endsWith(`homelab.local`)) {
+    document.title = `🏠 ${title}`;
+  } else if (hostname.startsWith(`localhost`)) {
+    document.title = `💻 ${title}`;
+  }
+}, 0);
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
