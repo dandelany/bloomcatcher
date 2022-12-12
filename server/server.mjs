@@ -60,5 +60,5 @@ app.get("/api/latest", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Bloomcatcher server on Node ${process.version} (${process.execPath}) listening on port ${port}`);
 });
