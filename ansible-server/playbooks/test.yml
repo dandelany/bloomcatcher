@@ -1,0 +1,7 @@
+- name: test the thing
+  hosts: homelab
+  tasks:
+    - name: source nvm
+      ansible.builtin.shell: ". ~/.nvm/nvm.sh"
+    - name: Try to run nvm
+      ansible.builtin.command: "nvm current"

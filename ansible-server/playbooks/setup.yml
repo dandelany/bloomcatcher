@@ -1,0 +1,21 @@
+- name: test the thing
+  hosts: homelab
+#  roles:
+#    - role: ansible-role-nvm
+#      nodejs_version: "lts/gallium" # Node 16
+#      nvm_commands:
+#        - "pwd"
+#        - "nvm current"
+#        - "node --version"
+#      become: true
+#      become_user: dan
+  post_tasks:
+    - name: 'source nvm'
+      shell: >
+        /bin/bash -c "source {{ ansible_env.HOME }}/.nvm/nvm.sh && nvm current"
+      become: true
+      become_user: dan
+    - name: test nvm
+      ansible.builtin.command: "nvm current"
+      become: true
+      become_user: dan

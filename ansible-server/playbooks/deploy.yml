@@ -1,15 +1,10 @@
 - name: Deploy bloomcatcher server
   hosts: homelab
-  tasks:
-    - name: Ensure "nodejs" package is installed
-      become: yes
-      ansible.builtin.apt:
-        name: nodejs
-
+  pre_tasks:
     - name: Ensure repos directory exists
       ansible.builtin.file:
-        path: /home/dan/Documents/repos
-        state: directory
+          path: /home/dan/Documents/repos
+          state: directory
 
     - name: checkout bloomcatcher repo
       ansible.builtin.git:
@@ -18,16 +13,23 @@
         version: master
         accept_hostkey: true
 
-    - name: restart pm2 service
-      ansible.builtin.command: pm2 startOrRestart ecosystem.config.js
-      args:
-        chdir: /home/dan/Documents/repos/bloomcatcher/server
-    # rebuild client
+    # todo: install system dependencies - rsync, ffmpeg
 
-    # TODO: npm install
-
-#    - name: Install "pm2" node.js package globally.
-#      community.general.npm:
-#        name: pm2
-#        global: true
+  roles:
+    - role: ansible-role-nvm
+      nodejs_version: "lts/gallium" # Node 16
+      autocomplete: true
+      nvm_commands:
+        # set & use nvm alias to ensure we use correct node version 
+        - "nvm alias bloomNode {{ nodejs_version }}"
+        # make sure pm2 (process manager) is installed
+        - "nvm exec bloomNode npm install -g pm2"
+        # install npm dependencies for node server
+        - "cd /home/dan/Documents/repos/bloomcatcher/server && nvm exec bloomNode npm install"
+        # install npm dependencies for web client
+        - "cd /home/dan/Documents/repos/bloomcatcher/web-client && nvm exec bloomNode npm install"
+        # build web client in production mode
+        - "NODE_ENV=production cd /home/dan/Documents/repos/bloomcatcher/web-client && nvm exec bloomNode npm run build"
+        # start node server with pm2
+        - "cd /home/dan/Documents/repos/bloomcatcher/server && nvm exec bloomNode pm2 startOrRestart ecosystem.config.js"
 
