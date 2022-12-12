@@ -1,9 +1,6 @@
 ## ansible-server
 ansible scripts/roles/etc. for deploying the bloomcatcher server (& web client)
 
-#### Install requirements
-`ansible-galaxy install -r requirements.yml`
-
 #### Deploy to server
 `ansible-playbook -v playbooks/deploy.yml`
 

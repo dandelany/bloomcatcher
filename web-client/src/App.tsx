@@ -24,7 +24,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">Bloomcatcher</header>
+      {/*<header className="App-header">Bloomcatcher</header>*/}
 
       {/*<nav>*/}
       {/*  <ul>*/}
@@ -45,10 +45,6 @@ function App() {
                     Latest from {camera.name} - {lastImgName}
                   </h3>
                   <img src={imgUrl} alt="" style={{ height: "90vh" }} />
-                  {/*{camera.latestImages.map(imgName => {*/}
-                  {/*  const imgUrl = `http://localhost:3939/data/images/${camera.name}/latest/${imgName}`;*/}
-                  {/*  return <img src={imgUrl} alt="" width={300} />*/}
-                  {/*})}*/}
                 </div>
               );
             })}
