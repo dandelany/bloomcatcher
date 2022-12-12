@@ -5,7 +5,7 @@ import { baseUrl } from "./utils";
 
 // refresh the page every 20 seconds
 // todo: implement proper data refreshing
-setTimeout(() => window.location.reload(), 20 * 1000);
+setTimeout(() => window.location.reload(), 30 * 1000);
 
 function App() {
   const [latest, setLatest] = useState<API.LatestResponse | null>(null);
@@ -44,7 +44,7 @@ function App() {
               const imgUrl = `${baseUrl}/data/images/${camera.name}/latest/${lastImgName}`;
 
               const imgCount = camera.latestImages.length;
-              const desiredMaxImgCount = 60;
+              const desiredMaxImgCount = 10;
               const imgSkip = Math.ceil(imgCount / desiredMaxImgCount);
 
               return (
