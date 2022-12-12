@@ -58,7 +58,7 @@ function App() {
                     {camera.latestImages
                       .filter((d, i) => i % imgSkip === 0)
                       .map((imgName) => {
-                        const thumbUrl = `${baseUrl}/thumbs/300/${camera.name}/latest/${lastImgName}`;
+                        const thumbUrl = `${baseUrl}/thumbs/300/${camera.name}/latest/${imgName}`;
                         return <img src={thumbUrl} alt="" style={{ width: "300px" }} />;
                       })}
                   </div>
