@@ -66,7 +66,7 @@ app.get("/api/latest", async (req, res) => {
   }
 });
 
-app.get("/thumbs/:width/*", (req, res) => {
+app.get("/thumbs/:width/*", (req, res, next) => {
   // creates a thumbnail of a larger image using sharp
   // :width url parameter defines width of thumbnail
   // * is the path to an image in /data/images
@@ -81,7 +81,8 @@ app.get("/thumbs/:width/*", (req, res) => {
     .then((data) => {
       res.contentType("image/jpeg");
       res.send(data);
-    });
+    })
+    .catch((e) => next(e));
 });
 
 app.listen(port, () => {
