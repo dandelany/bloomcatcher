@@ -3,6 +3,7 @@ import * as path from "path";
 import { fileURLToPath } from "url";
 import express from "express";
 import cors from "cors";
+import serveIndex from "serve-index";
 
 import { DATA_DIR_PATH } from "./constants.mjs";
 import { getLatestImages } from "./utils/data.mjs";
@@ -21,8 +22,13 @@ app.use(cors(corsOptions));
 const webClientBuildPath = path.join(__dirname, "../web-client/build");
 app.use("/", express.static(webClientBuildPath));
 
-// static server for all data in the data directory
-app.use("/data", express.static(DATA_DIR_PATH));
+
+app.use("/data",
+    // static server for all data in the data directory
+    express.static(DATA_DIR_PATH),
+    // serve index pages for directories in data dir
+    serveIndex(DATA_DIR_PATH, { icons: true })
+);
 
 // get the list of cameras & their metadata
 // todo replace this with shared config file
