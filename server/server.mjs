@@ -7,7 +7,8 @@ import serveIndex from "serve-index";
 import sharp from "sharp";
 
 import { DATA_DIR_PATH } from "./constants.mjs";
-import { getLatestImages } from "./utils/data.mjs";
+import { getDirsIn, getJpgsIn, getJpgsInSync, getLatestImages } from "./utils/data.mjs";
+import { metaStore } from "./metadataStore.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,8 +16,14 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = 3939;
 
+// initialize the metadata store
+metaStore.init();
+
+
 // enable cross-origin requests from the web-client dev server
-const corsOptions = { origin: "http://localhost:3940" };
+// const corsOptions = { origin: "http://localhost:3940" };
+// todo lock down cors in production?
+const corsOptions = { origin: "*" };
 app.use(cors(corsOptions));
 
 // serve built web client with static server
@@ -36,6 +43,7 @@ app.use(
 const cameras = [
   { name: "claude", hostname: "claude.local" },
   { name: "georgia", hostname: "georgia.local" },
+  { name: "vincent", hostname: "vincent.local" }
 ];
 app.get("/api/cameras", async (req, res) => {
   const camerasInfo = await Promise.all(
@@ -65,6 +73,54 @@ app.get("/api/latest", async (req, res) => {
     res.status(500).send(JSON.stringify(error));
   }
 });
+
+app.get("/api/library", async (req, res) => {
+  try {
+    // names of folders in /data/images are the names of the cameras
+    const imagesDirPath = path.join(DATA_DIR_PATH, "images");
+    const dirObjs = await readdir(imagesDirPath, { withFileTypes: true });
+    const cameraNames = dirObjs.filter((obj) => obj.isDirectory()).map((obj) => obj.name);
+
+    const library = await Promise.all(
+      cameraNames.map(async cameraName => {
+        // path of the directory containing all images for this camera (data/images/myname)
+        const camImgDirPath = path.join(imagesDirPath, cameraName);
+        const camSessionDirs = await getDirsIn(camImgDirPath);
+        return {
+          name: cameraName,
+          sessions: camSessionDirs.map(sessionDir => {
+            const sessionDirPath = path.join(camImgDirPath, sessionDir);
+            const sessionJpgs = getJpgsInSync(sessionDirPath);
+            const count = sessionJpgs.length;
+            const thumbUrl = sessionJpgs[0];
+            return {
+              dirName: sessionDir,
+              name: sessionDir.split('_').slice(1).join(''),
+              date: sessionDir.split('_')[0],
+              count,
+              thumbUrl
+            }
+          })
+        }
+      })
+    )
+
+    res.json(library);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(JSON.stringify(err));
+  }
+});
+app.get("/api/session/:cameraName/:sessionId", (req, res) => {
+  // get a single session of photos (folder of contiguous photos)
+  const {cameraName, sessionId} = req.params;
+  const sessionDirPath = path.join(DATA_DIR_PATH, "images", cameraName, sessionId);
+  const sessionJpgs = getJpgsInSync(sessionDirPath);
+  res.json({
+    images: sessionJpgs
+  });
+})
+
 
 app.get("/thumbs/:width/*", (req, res, next) => {
   // creates a thumbnail of a larger image using sharp

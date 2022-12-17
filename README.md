@@ -1,3 +1,5 @@
+## Warning: This project is currenrly under active development and should not be used in its current unstable state unless you know what you're doing!
+
 # bloomcatcher
 A collection of tools for building and operating a fleet of Raspberry Pi timelapse cameras. 
 
