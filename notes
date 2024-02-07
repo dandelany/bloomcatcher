@@ -1,0 +1,138 @@
+Bloomcatcher
+=======
+
+Goals
+Make homelab central server for 
+	* downloading & managing camera data
+		- making "sessions", splitting photos into different sessions, deleting
+	* serve web app to display latest photos & video
+	* web app for controlling camera/shot settings
+		- control begin/end time, exposure, white balance
+Repeatable, deployable
+
+
+TODO
+	Code
+		* node backend
+			* X  endpoint that returns URLs for all the latest photos (in /latest)
+			* X static server to serve those photos
+		* react frontend
+			* x create react app + typescript + redux
+			* x get the latest urls, display
+	Operations
+		* ansible to deploy
+		* pm2 to run node apps
+			* sync service
+			* web service - node backend
+			* thumbnail service
+
+
+12/9 TODO
+=====
+* Fix bug with remote access
+	- serve react app from express?
+* ansible deploy to homelab
+  - ssh to homelab
+  - git checkout latest
+  - rebuild client
+  - restart pm2 processes
+* take changes from homelab sync.js file - bring into repo
+  - config for private key location
+* on-the-fly thumbnailing with `epeg`
+
+* auto-generate latest video
+* serve file index
+* [x] setup NAS on homelab, transfer archive
+* move to shared config file:
+ - info about camera names/usernames/etc.
+ - path to local SSH key
+
+
+dream pi camera...
+ * safe power button
+ 
+ * motion sensor
+ * integrated battery/PMIC
+   - lipo charging
+   - battery voltage meter
+ * autofocus
+ * low-power sleep mode
+   - watchdog microcontroller with low-power sleep
+
+
+ Notes 12/11
+ =======
+ * Trying to get ansible working with ansible-role-nvm
+ 	https://github.com/morgangraphics/ansible-role-nvm
+ * Uninstalled nvm from homelab
+ * reinstalled with ansible-role-nvm
+ * implemented in deploy.yml
+ * Still messy/unclear how best to use nvm with ansible. command list in deploy is pretty janky to ensure running in nvm context.
+
+ * Dep shopping...
+ 	- UI - mantine? https://ui.mantine.dev
+ 	- [x] display index 
+ 	- react router
+ 	- epeg for jpeg thumbs
+
+
+Notes 12/16
+=======
+* Cam setup
+	- put data folder in right place
+	- web client
+		- cd web-client
+		- npm install
+	- server
+		- cd server
+		- npm install
+
+
+Notes 12/18
+============
+
+* Integrate sync'ing with server
+	- showing cameras "connected"
+	- showing download status?
+	- latest page should show latest images always, etc.
+* Integrate making videos with server
+	- when camera is shooting/connected, re-make latest video every 10-15 minutes
+	- display video on latest page, auto-refresh
+* General server/camera communication
+
+* Changing camera settings
+	- Camera manager > select camera > settings
+	- UI components
+	- Set exposure compensation
+	- Set white balance
+	- Exposure bracketing
+
+* Field mode
+	- generate WIFi AP
+
+* Image Library features
+	- displaying thumbnails
+	- video controls
+		- playback rate
+		- skip ahead/back
+	- persisting metadata in a file
+		- favorite images
+		- session rating 1-5 stars
+		- session tags
+		- session "album cover" image
+
+* Video Assembly
+	- by default, automatically creates "raw" video for each session
+	- options for video creation
+		- start/stop time
+		- zoom level
+		- pan/zoom 
+
+
+
+
+
+
+
+
+
